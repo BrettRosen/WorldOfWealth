@@ -84,6 +84,7 @@
 		1F52832A2B16D57F000F5260 /* AddonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddonsView.swift; sourceTree = "<group>"; };
 		1F52832E2B16E42A000F5260 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		1F5283302B16F0C2000F5260 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
+		1F5283312B16F30E000F5260 /* World-of-Wealth-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "World-of-Wealth-Info.plist"; sourceTree = SOURCE_ROOT; };
 		1F9CC6332B0F236A004DB9B3 /* World of Wealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "World of Wealth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F9CC6362B0F236A004DB9B3 /* World_of_WealthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World_of_WealthApp.swift; sourceTree = "<group>"; };
 		1F9CC63A2B0F236B004DB9B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -230,6 +231,7 @@
 		1F9CC6352B0F236A004DB9B3 /* World of Wealth */ = {
 			isa = PBXGroup;
 			children = (
+				1F5283312B16F30E000F5260 /* World-of-Wealth-Info.plist */,
 				1F52831F2B16CF1A000F5260 /* Utility */,
 				1F5282E52B16C65E000F5260 /* GoogleService-Info.plist */,
 				1F1ABF782B110B070060FDEF /* Styles */,
@@ -639,6 +641,7 @@
 				DEVELOPMENT_TEAM = Z2HT5GMEGY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "World-of-Wealth-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -668,6 +671,7 @@
 				DEVELOPMENT_TEAM = Z2HT5GMEGY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "World-of-Wealth-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
