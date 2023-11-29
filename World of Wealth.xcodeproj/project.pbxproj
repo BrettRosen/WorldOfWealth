@@ -44,7 +44,6 @@
 		1F5283292B16D575000F5260 /* AddonsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5283282B16D575000F5260 /* AddonsFeature.swift */; };
 		1F52832B2B16D57F000F5260 /* AddonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F52832A2B16D57F000F5260 /* AddonsView.swift */; };
 		1F9CC6372B0F236A004DB9B3 /* World_of_WealthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC6362B0F236A004DB9B3 /* World_of_WealthApp.swift */; };
-		1F9CC6392B0F236A004DB9B3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC6382B0F236A004DB9B3 /* ContentView.swift */; };
 		1F9CC63B2B0F236B004DB9B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F9CC63A2B0F236B004DB9B3 /* Assets.xcassets */; };
 		1F9CC63E2B0F236B004DB9B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F9CC63D2B0F236B004DB9B3 /* Preview Assets.xcassets */; };
 		1F9CC6482B0F236B004DB9B3 /* World_of_WealthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC6472B0F236B004DB9B3 /* World_of_WealthTests.swift */; };
@@ -83,9 +82,10 @@
 		1F5283222B16CF86000F5260 /* Codable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Extensions.swift"; sourceTree = "<group>"; };
 		1F5283282B16D575000F5260 /* AddonsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddonsFeature.swift; sourceTree = "<group>"; };
 		1F52832A2B16D57F000F5260 /* AddonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddonsView.swift; sourceTree = "<group>"; };
+		1F52832E2B16E42A000F5260 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
+		1F5283302B16F0C2000F5260 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		1F9CC6332B0F236A004DB9B3 /* World of Wealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "World of Wealth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F9CC6362B0F236A004DB9B3 /* World_of_WealthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World_of_WealthApp.swift; sourceTree = "<group>"; };
-		1F9CC6382B0F236A004DB9B3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1F9CC63A2B0F236B004DB9B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F9CC63D2B0F236B004DB9B3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1F9CC6432B0F236B004DB9B3 /* World of WealthTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "World of WealthTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,9 +197,19 @@
 			path = Addons;
 			sourceTree = "<group>";
 		};
+		1F52832C2B16DB90000F5260 /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				1F52832E2B16E42A000F5260 /* ci_post_clone.sh */,
+				1F5283302B16F0C2000F5260 /* ci_pre_xcodebuild.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		1F9CC62A2B0F236A004DB9B3 = {
 			isa = PBXGroup;
 			children = (
+				1F52832C2B16DB90000F5260 /* ci_scripts */,
 				1F9CC6352B0F236A004DB9B3 /* World of Wealth */,
 				1F9CC6462B0F236B004DB9B3 /* World of WealthTests */,
 				1F9CC6502B0F236B004DB9B3 /* World of WealthUITests */,
@@ -226,7 +236,6 @@
 				1F9CC6362B0F236A004DB9B3 /* World_of_WealthApp.swift */,
 				1F9CC6692B0FD1B8004DB9B3 /* Features */,
 				1F9CC6632B0F26A4004DB9B3 /* Extensions */,
-				1F9CC6382B0F236A004DB9B3 /* ContentView.swift */,
 				1F9CC63A2B0F236B004DB9B3 /* Assets.xcassets */,
 				1F9CC63C2B0F236B004DB9B3 /* Preview Content */,
 			);
@@ -454,7 +463,6 @@
 			files = (
 				1F9CC6682B0F2745004DB9B3 /* TemplateFeature.swift in Sources */,
 				1F9CC66E2B10344D004DB9B3 /* GetStartedView.swift in Sources */,
-				1F9CC6392B0F236A004DB9B3 /* ContentView.swift in Sources */,
 				1F5283292B16D575000F5260 /* AddonsFeature.swift in Sources */,
 				1F1ABF7A2B110B0D0060FDEF /* Colors.swift in Sources */,
 				1F1785062B11894500F520E9 /* MakeGoldView.swift in Sources */,
