@@ -35,7 +35,7 @@ struct PageFeature {
         var pageState: PageState = .isLoading
     }
 
-    enum Action: Equatable, FeatureAction {
+    enum Action: FeatureAction {
         enum ViewAction: Equatable {
             case didAppear
             case didTapEdit
@@ -67,6 +67,7 @@ struct PageFeature {
                             try await pageClient.load(pageID: state.pageID)
                         })))
                     }
+                    .animation(.easeIn)
                 case .didTapEdit:
                     if case let .editing(editingState) = state.pageState {
                         state.pageState = .page(editingState.page)

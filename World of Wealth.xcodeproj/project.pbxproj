@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1F1ABF7A2B110B0D0060FDEF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABF792B110B0D0060FDEF /* Colors.swift */; };
 		1F4C8AD92B2BD75200DD09AE /* EditPageFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C8AD82B2BD75200DD09AE /* EditPageFeature.swift */; };
+		1F4C8ADB2B2BF7FC00DD09AE /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C8ADA2B2BF7FC00DD09AE /* View+Extensions.swift */; };
 		1F5282E62B16C65E000F5260 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F5282E52B16C65E000F5260 /* GoogleService-Info.plist */; };
 		1F5282EA2B16C8D7000F5260 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1F5282E92B16C8D7000F5260 /* FirebaseAnalytics */; };
 		1F5282EC2B16C8D7000F5260 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 1F5282EB2B16C8D7000F5260 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -78,6 +79,7 @@
 /* Begin PBXFileReference section */
 		1F1ABF792B110B0D0060FDEF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		1F4C8AD82B2BD75200DD09AE /* EditPageFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPageFeature.swift; sourceTree = "<group>"; };
+		1F4C8ADA2B2BF7FC00DD09AE /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		1F5282E52B16C65E000F5260 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F5283202B16CF49000F5260 /* FirestoreNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreNetworking.swift; sourceTree = "<group>"; };
 		1F5283222B16CF86000F5260 /* Codable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Extensions.swift"; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				1F5283222B16CF86000F5260 /* Codable+Extensions.swift */,
+				1F4C8ADA2B2BF7FC00DD09AE /* View+Extensions.swift */,
 				1F9CC6642B0F26AA004DB9B3 /* TCA */,
 			);
 			path = Extensions;
@@ -490,6 +493,7 @@
 				1F5283382B193F4A000F5260 /* PageNetworking.swift in Sources */,
 				1F9CC6372B0F236A004DB9B3 /* World_of_WealthApp.swift in Sources */,
 				1F5283212B16CF49000F5260 /* FirestoreNetworking.swift in Sources */,
+				1F4C8ADB2B2BF7FC00DD09AE /* View+Extensions.swift in Sources */,
 				1F5283232B16CF86000F5260 /* Codable+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

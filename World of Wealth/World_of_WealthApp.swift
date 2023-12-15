@@ -53,9 +53,11 @@ struct AppFeature {
         var makeGoldPageListState: PageListFeature.State = .init(pageIDs: Page.ID.makeGoldIDs)
     }
 
-    enum Action: Equatable, FeatureAction {
+    enum Action: FeatureAction {
         enum ViewAction: Equatable {
             case didUpdateTab(Tab)
+            // Separated out for scrolling vs tapping logic
+            case didTapTab(Tab)
         }
 
         enum ReducerAction: Equatable {
@@ -81,6 +83,21 @@ struct AppFeature {
                     switch action {
                     case let .didUpdateTab(tab):
                         state.tab = tab
+                        return .none
+                    case let .didTapTab(tab):
+                        if state.tab == tab {
+                            switch tab {
+                            case .get_started:
+                                state.getStartedPageListState.selectedPageState = nil
+                            case .make_gold:
+                                state.makeGoldPageListState.selectedPageState = nil
+                            case .community:
+                                //state.makeGoldPageListState.selectedPageState = nil
+                                return .none
+                            }
+                        } else {
+                            state.tab = tab
+                        }
                         return .none
                     }
                 case let .reducer(action):
@@ -179,7 +196,7 @@ struct World_of_WealthApp: App {
                             Spacer()
                             let isSelected = tab == viewStore.tab
                             Button(action: {
-                                viewStore.send(.didUpdateTab(tab), animation: .default)
+                                viewStore.send(.didTapTab(tab), animation: .default)
                             }) {
                                 VStack(spacing: 8) {
                                     Image(systemName: isSelected ? (tab.imageName + ".fill") : tab.imageName)

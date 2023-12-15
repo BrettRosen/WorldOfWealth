@@ -80,6 +80,7 @@ enum ContentBlock: Equatable, Codable, Identifiable {
     case paragraph(ContentParagraph)
     case image(url: String) // URL
     case divider(id: String)
+    case spacer(id: String)
 
     var id: String {
         switch self {
@@ -87,6 +88,7 @@ enum ContentBlock: Equatable, Codable, Identifiable {
         case let .paragraph(paragraph): return paragraph.id
         case let .image(url): return url
         case let .divider(id): return id
+        case let .spacer(id): return id
         }
     }
 }

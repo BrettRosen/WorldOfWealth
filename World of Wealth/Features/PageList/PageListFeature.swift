@@ -17,7 +17,7 @@ struct PageListFeature {
         var selectedPageState: PageFeature.State?
     }
 
-    enum Action: Equatable, FeatureAction {
+    enum Action: FeatureAction {
         enum ViewAction: Equatable {
             case updatedSelectedPageID(Page.ID?)
         }

@@ -15,13 +15,13 @@ enum PageClientError: Error, Equatable {
 @DependencyClient
 struct PageClient {
     var load: (_ pageID: Page.ID) async throws -> Page
-    var edit: (_ page: Page) async throws -> Void
+    var edit: (_ page: Page) async throws -> Success
 }
 
 extension PageClient: DependencyKey {
   static let liveValue = PageClient(
     load: { id in try await Networking.fetchPage(id: id) },
-    edit: { _ in }
+    edit: { page in try await Networking.updatePage(page: page) }
   )
 }
 

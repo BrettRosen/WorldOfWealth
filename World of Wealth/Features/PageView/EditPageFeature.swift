@@ -10,6 +10,8 @@ import Foundation
 
 @Reducer
 struct EditPageFeature {
+    @Dependency(\.pageClient) var pageClient
+
     struct State: Equatable {
         var page: Page
 
@@ -22,15 +24,15 @@ struct EditPageFeature {
         }
     }
 
-    enum Action: Equatable, FeatureAction {
+    enum Action: FeatureAction {
         enum ViewAction: Equatable {
             case didTapAddContent(ContentBlock)
             case didTapCompleteEdit
             case didTapCancel
         }
 
-        enum ReducerAction: Equatable {
-
+        enum ReducerAction {
+            case updatePageEffect(Result<Success, Error>)
         }
 
         enum DelegateAction: Equatable {
@@ -53,13 +55,20 @@ struct EditPageFeature {
                     state.page.content.append(content)
                     return .none
                 case .didTapCompleteEdit:
-                    return .send(.delegate(.didComplete(newPage: state.page)))
+                    return .run { [state] send in
+                        await send(.reducer(.updatePageEffect(
+                            Result { try await pageClient.edit(state.page) }
+                        )))
+                    }
                 case .didTapCancel:
                     return .send(.delegate(.didCancel(initialPage: state.initialPage)))
                 }
             case let .reducer(action):
                 switch action {
-
+                case .updatePageEffect(.success):
+                    return .send(.delegate(.didComplete(newPage: state.page)))
+                case .updatePageEffect(.failure):
+                    return .none
                 }
             case .delegate:
                 return .none

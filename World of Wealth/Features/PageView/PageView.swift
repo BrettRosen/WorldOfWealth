@@ -67,6 +67,7 @@ struct PageView: View {
     @Environment(\.colorScheme) private var colorScheme
     // For animations
     @State private var didAppear: Bool = false
+    @State private var scrollOffset: CGPoint = .zero
 
     let store: StoreOf<PageFeature>
     let namespace: Namespace.ID
@@ -74,71 +75,43 @@ struct PageView: View {
 
     var body: some View {
         WithViewStore(store, observe: PageFeature.ViewState.init, send: PageFeature.Action.view) { viewStore in
-            ZStack(alignment: .top) {
 
+            ZStack {
                 SwitchStore(self.store.scope(state: \.pageState, action: \.self)) { pageState in
 
                     switch pageState {
                     case let .page(page):
-//                        ScrollView {
-//                            VStack {
-//                                Text(viewStore.pageID.title)
-//                                    .frame(maxWidth: .infinity)
-//                                    .foregroundStyle(viewStore.pageID.color)
-//                                    .brightness(colorScheme == .dark ? 0.95 : 0)
-//                                    .matchedGeometryEffect(id: viewStore.pageID.title, in: namespace)
-//                                    .font(.title2)
-//                                    .fontWeight(.semibold)
-//
-//                                VStack(spacing: 12) {
-//                                    ForEach(page.content) { contentBlock in
-//                                        switch contentBlock {
-//                                        case let .title(title):
-//                                            Text(title.value)
-//                                                .font(.title)
-//                                        case let .paragraph(paragraph):
-//                                            Text(paragraph.value)
-//                                                .font(.body)
-//                                        case let .image(url):
-//                                            AsyncImage(url: URL(string: url)) { image in
-//                                                image
-//                                            } placeholder: {
-//                                                Rectangle()
-//                                            }
-//                                        case .divider:
-//                                            Divider()
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                            .padding(16)
-//                        }
-//                        .scrollIndicators(.hidden)
-
-                        VStack {
-                            HStack(alignment: .top) {
-                                Button(action: {
-                                    viewStore.send(.didTapEdit, animation: .default)
-                                }) {
-                                    Image(systemName: "pencil")
-                                        .padding(16)
-                                }
-                                .buttonStyle(.plain)
-                                Spacer()
-                                Button(action: didTapExit) {
-                                    Image(systemName: "xmark")
-                                        .padding(16)
-                                        .animation(.easeIn.delay(0.2)) { content in
-                                            content.opacity(didAppear ? 1 : 0)
+                        OffsetObservingScrollView(offset: $scrollOffset) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                ForEach(page.content) { contentBlock in
+                                    switch contentBlock {
+                                    case let .title(title):
+                                        Text(title.value)
+                                            .font(.title)
+                                    case let .paragraph(paragraph):
+                                        Text(paragraph.value)
+                                            .font(.body)
+                                    case let .image(url):
+                                        AsyncImage(url: URL(string: url)) { image in
+                                            image
+                                        } placeholder: {
+                                            Rectangle()
                                         }
+                                    case .divider:
+                                        Divider()
+                                    case .spacer:
+                                        Rectangle()
+                                            .frame(height: 32)
+                                            .opacity(0.005)
+                                    }
                                 }
-                                .buttonStyle(.plain)
                             }
-                            .animation(.easeIn.delay(0.2)) { content in
-                                content.opacity(didAppear ? 1 : 0)
-                            }
-                            Spacer()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, screen.height / 4)
                         }
+                        .scrollIndicators(.hidden)
+
                     case .editing:
                         CaseLet(
                             \PageFeature.PageState.editing,
@@ -150,11 +123,55 @@ struct PageView: View {
                     case .error:
                         Text("Error")
                     }
+
+                    VStack {
+                        HStack(alignment: .top) {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(viewStore.pageID.title)
+                                    .foregroundStyle(viewStore.pageID.color)
+                                    .brightness(colorScheme == .dark ? 0.95 : 0)
+                                    .matchedGeometryEffect(id: viewStore.pageID.title, in: namespace)
+                                    .font(.largeTitle)
+                                    .fontWeight(.semibold)
+                                Text(viewStore.pageID.description.uppercased())
+                                    .fontWidth(.condensed)
+                                    .font(.callout)
+                                    .foregroundStyle(viewStore.pageID.color.opacity(0.6))
+                                    .brightness(colorScheme == .dark ? 0.9 : 0)
+                            }
+                            .opacity(max(0.0, 1.0 - (scrollOffset.y / 100.0)))
+
+                            Spacer()
+                            Button(action: {
+                                viewStore.send(.didTapEdit, animation: .default)
+                            }) {
+                                Image(systemName: "pencil")
+                            }
+                            .buttonStyle(.plain)
+                            Button(action: didTapExit) {
+                                Image(systemName: "xmark")
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .animation(.easeIn.delay(0.2)) { content in
+                            content.opacity(didAppear ? 1 : 0)
+                        }
+
+                        Spacer()
+                    }
+                    .padding(16)
+                    .opacity({
+                        if case .editing = viewStore.pageState {
+                            return 0
+                        } else {
+                            return 1
+                        }
+                    }())
                 }
             }
             .onAppear {
-                didAppear = true
                 viewStore.send(.didAppear, animation: .default)
+                didAppear = true
             }
         }
     }
@@ -180,75 +197,85 @@ struct EditPageView: View {
 
             ZStack {
                 List {
-                    VStack(spacing: 12) {
-                        Text("Editing")
-                        ForEach(viewStore.page.content) { contentBlock in
-                            Section {
-                                switch contentBlock {
-                                case let .title(title):
-                                    Text(title.value)
-                                        .font(.title)
-                                case let .paragraph(paragraph):
-                                    Text(paragraph.value)
-                                        .font(.body)
-                                case let .image(url):
-                                    AsyncImage(url: URL(string: url)) { image in
-                                        image
-                                    } placeholder: {
-                                        Rectangle()
-                                    }
-                                case .divider:
-                                    Divider()
-                                }
+                    ForEach(viewStore.page.content) { contentBlock in
+                        switch contentBlock {
+                        case let .title(title):
+                            Text(title.value)
+                                .font(.title)
+                        case let .paragraph(paragraph):
+                            Text(paragraph.value)
+                                .font(.body)
+                        case let .image(url):
+                            AsyncImage(url: URL(string: url)) { image in
+                                image
+                            } placeholder: {
+                                Rectangle()
+                            }
+                        case .divider:
+                            HStack {
+                                Image(systemName: "square.fill.and.line.vertical.and.square.fill")
+                                    .rotationEffect(.degrees(90))
+                                Text("Divider")
+                            }
+                        case .spacer:
+                            HStack {
+                                Image(systemName: "space")
+                                    .rotationEffect(.degrees(90))
+                                Text("Spacer")
                             }
                         }
-                        .onMove { from, to in
-                            //viewStore.send()
-                        }
                     }
-                    .padding(16)
+                    .onMove { from, to in
+                        //viewStore.send()
+                    }
+                    .padding(.horizontal, 16)
                 }
 
                 VStack {
-                    HStack(alignment: .top) {
-                        HStack {
+                    HStack(spacing: 16) {
+                        Menu("", systemImage: "plus") {
                             Button(action: {
-                                viewStore.send(.didTapCompleteEdit, animation: .spring(.bouncy))
+                                viewStore.send(.didTapAddContent(.title(.init(value: "Title"))))
                             }) {
-                                Image(systemName: "checkmark")
+                                Text("Title")
                             }
-                            .buttonStyle(.plain)
-                            Menu("", systemImage: "plus") {
-                                Button(action: {
-                                    viewStore.send(.didTapAddContent(.title(.init(value: "Title"))))
-                                }) {
-                                    Text("Title")
-                                }
-                                Button(action: {
-                                    viewStore.send(.didTapAddContent(.paragraph(.init(value: "Paragraph"))))
-                                }) {
-                                    Text("Paragraph")
-                                }
-                                Button(action: {
-                                    viewStore.send(.didTapAddContent(.divider(id: UUID().uuidString)))
-                                }) {
-                                    Text("Divider")
-                                }
+                            Button(action: {
+                                viewStore.send(.didTapAddContent(.paragraph(.init(value: "Paragraph"))))
+                            }) {
+                                Text("Paragraph")
                             }
-                            .buttonStyle(.plain)
+                            Button(action: {
+                                viewStore.send(.didTapAddContent(.divider(id: UUID().uuidString)))
+                            }) {
+                                Text("Divider")
+                            }
+                            Button(action: {
+                                viewStore.send(.didTapAddContent(.spacer(id: UUID().uuidString)))
+                            }) {
+                                Text("Spacer")
+                            }
                         }
-                        .padding(16)
+                        .buttonStyle(.plain)
 
                         Spacer()
+                        Button(action: {
+                            viewStore.send(.didTapCompleteEdit, animation: .spring(.bouncy))
+                        }) {
+                            Image(systemName: "checkmark")
+                                .padding(8)
+                                .background(.thinMaterial, in: Circle())
+                        }
+                        .buttonStyle(.plain)
                         Button(action: {
                             viewStore.send(.didTapCancel, animation: .default)
                         }) {
                             Text("Cancel")
                                 .font(.callout)
-                                .padding(16)
+                                .foregroundStyle(.red)
                         }
                         .buttonStyle(.plain)
                     }
+                    .padding(16)
                     .animation(.easeIn.delay(0.2)) { content in
                         content.opacity(didAppear ? 1 : 0)
                     }

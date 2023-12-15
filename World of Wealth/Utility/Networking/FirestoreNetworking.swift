@@ -13,7 +13,7 @@ import FirebaseFirestoreCombineSwift
 import Foundation
 import OSLog
 
-struct Success { }
+struct Success: Equatable { }
 
 func retrying<T>(
     attempts: Int = 3,
