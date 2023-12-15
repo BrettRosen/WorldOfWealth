@@ -11,46 +11,6 @@ import SwiftUI
 
 let screen = UIScreen.main.bounds
 
-struct FullScreenAddonView: View {
-    @Environment(\.colorScheme) private var colorScheme
-    @State private var didAppear: Bool = false
-
-    let addons = GetStartedElement.addons
-    let namespace: Namespace.ID
-    var didTapExit: () -> Void
-
-    var body: some View {
-        ZStack {
-            HStack {
-                Spacer()
-                Button(action: didTapExit) {
-                    Image(systemName: "xmark")
-                        .padding(16)
-                        .animation(.easeIn.delay(0.2)) { content in
-                            content.opacity(didAppear ? 1 : 0)
-                        }
-                }
-                .buttonStyle(.plain)
-            }
-
-            VStack {
-                Text(addons.title)
-                    .frame(maxWidth: .infinity)
-                    .foregroundStyle(addons.color)
-                    .brightness(colorScheme == .dark ? 0.95 : 0)
-                    .matchedGeometryEffect(id: addons.title, in: namespace)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .padding(16)
-                Spacer()
-            }
-        }
-        .onAppear {
-            didAppear = true
-        }
-    }
-}
-
 struct ImageBlurRowView: View {
     @Environment(\.colorScheme) private var colorScheme
 
@@ -124,59 +84,54 @@ struct ImageBlurRowView: View {
     }
 }
 
-extension GetStartedFeature {
+extension PageListFeature {
     struct ViewState: Equatable {
-        var selectedElement: GetStartedElement?
+        var pageIDs: IdentifiedArrayOf<Page.ID>
+        var isPageSelected: Bool
         init(_ state: State) {
-            selectedElement = state.selectedElement
+            pageIDs = state.pageIDs
+            isPageSelected = state.selectedPageState != nil
         }
     }
 }
 
-struct GetStartedView: View {
-    let store: StoreOf<GetStartedFeature>
+struct PageListView: View {
+    let store: StoreOf<PageListFeature>
 
     @Environment(\.colorScheme) private var colorScheme
     @Namespace private var namespace
 
     var body: some View {
-        WithViewStore(store, observe: GetStartedFeature.ViewState.init, send: GetStartedFeature.Action.view) { viewStore in
-            ScrollView {
-                VStack(spacing: 8) {
-                    if let selectedElement = viewStore.selectedElement {
-                        switch selectedElement {
-                        case .addons:
-                            FullScreenAddonView(namespace: namespace, didTapExit: {
-                                viewStore.send(.updateSelectedElement(nil), animation: .default)
-                            })
-                        case .gearing:
-                            Text("Gearing")
-                        }
-                    } else {
-                        ForEach(GetStartedElement.allCases) { element in
-                            ImageBlurRowView(title: element.title, description: element.description, color: element.color, imageName: element.imageName, namespace: namespace, didTap: {
+        WithViewStore(store, observe: PageListFeature.ViewState.init, send: PageListFeature.Action.view) { viewStore in
+            VStack(spacing: 8) {
+                IfLetStore(store.scope(state: \.selectedPageState, action: \.page)) { store in
+                    PageView(store: store, namespace: namespace, didTapExit: {
+                        viewStore.send(.updatedSelectedPageID(nil), animation: .default)
+                    })
+                } else: {
+                    ScrollView {
+                        ForEach(viewStore.pageIDs) { pageID in
+                            ImageBlurRowView(title: pageID.title, description: pageID.description, color: pageID.color, imageName: pageID.imageName, namespace: namespace, didTap: {
 
-                                viewStore.send(.updateSelectedElement(element), animation: .default)
+                                viewStore.send(.updatedSelectedPageID(pageID), animation: .default)
                             })
                             .scrollTransition { content, phase in
                                 content
                                     .scaleEffect(phase.isIdentity ? 1 : (max(0.75, 1 * phase.value / 3)))
                             }
                         }
+                        .padding(.top, 64)
                     }
+                    .scrollIndicators(.hidden)
                 }
-                .padding(.horizontal, 8)
-                .padding(.top, viewStore.selectedElement == nil ? 64 : 0)
             }
-            .scrollIndicators(.hidden)
+            .padding(.horizontal, 8)
         }
     }
 }
 
 #Preview {
-    GetStartedView(store: .init(initialState: .init()) {
-        GetStartedFeature()
-    })
+    PageListView(store: .init(initialState: .init(pageIDs: Page.ID.getStartedIDs), reducer:  { PageListFeature() }))
 }
 
 struct SemicircleShape: Shape {

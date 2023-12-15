@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F1785062B11894500F520E9 /* MakeGoldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1785052B11894500F520E9 /* MakeGoldView.swift */; };
 		1F1ABF7A2B110B0D0060FDEF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABF792B110B0D0060FDEF /* Colors.swift */; };
-		1F5282E42B16C34A000F5260 /* MakeGoldFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5282E32B16C34A000F5260 /* MakeGoldFeature.swift */; };
+		1F4C8AD92B2BD75200DD09AE /* EditPageFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C8AD82B2BD75200DD09AE /* EditPageFeature.swift */; };
 		1F5282E62B16C65E000F5260 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F5282E52B16C65E000F5260 /* GoogleService-Info.plist */; };
 		1F5282EA2B16C8D7000F5260 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1F5282E92B16C8D7000F5260 /* FirebaseAnalytics */; };
 		1F5282EC2B16C8D7000F5260 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 1F5282EB2B16C8D7000F5260 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -41,8 +40,11 @@
 		1F5283212B16CF49000F5260 /* FirestoreNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5283202B16CF49000F5260 /* FirestoreNetworking.swift */; };
 		1F5283232B16CF86000F5260 /* Codable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5283222B16CF86000F5260 /* Codable+Extensions.swift */; };
 		1F5283262B16CFB2000F5260 /* BetterCodable in Frameworks */ = {isa = PBXBuildFile; productRef = 1F5283252B16CFB2000F5260 /* BetterCodable */; };
-		1F5283292B16D575000F5260 /* AddonsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5283282B16D575000F5260 /* AddonsFeature.swift */; };
-		1F52832B2B16D57F000F5260 /* AddonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F52832A2B16D57F000F5260 /* AddonsView.swift */; };
+		1F5283332B193524000F5260 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5283322B193524000F5260 /* PageView.swift */; };
+		1F5283362B1936F1000F5260 /* PageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5283352B1936F1000F5260 /* PageClient.swift */; };
+		1F5283382B193F4A000F5260 /* PageNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5283372B193F4A000F5260 /* PageNetworking.swift */; };
+		1F52833B2B19423A000F5260 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F52833A2B19423A000F5260 /* Page.swift */; };
+		1F52833D2B194728000F5260 /* PageFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F52833C2B194728000F5260 /* PageFeature.swift */; };
 		1F9CC6372B0F236A004DB9B3 /* World_of_WealthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC6362B0F236A004DB9B3 /* World_of_WealthApp.swift */; };
 		1F9CC63B2B0F236B004DB9B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F9CC63A2B0F236B004DB9B3 /* Assets.xcassets */; };
 		1F9CC63E2B0F236B004DB9B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F9CC63D2B0F236B004DB9B3 /* Preview Assets.xcassets */; };
@@ -52,8 +54,8 @@
 		1F9CC6622B0F23ED004DB9B3 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 1F9CC6612B0F23ED004DB9B3 /* ComposableArchitecture */; };
 		1F9CC6662B0F26B2004DB9B3 /* FeatureAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC6652B0F26B2004DB9B3 /* FeatureAction.swift */; };
 		1F9CC6682B0F2745004DB9B3 /* TemplateFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC6672B0F2745004DB9B3 /* TemplateFeature.swift */; };
-		1F9CC66C2B103440004DB9B3 /* GetStartedFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC66B2B103440004DB9B3 /* GetStartedFeature.swift */; };
-		1F9CC66E2B10344D004DB9B3 /* GetStartedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC66D2B10344D004DB9B3 /* GetStartedView.swift */; };
+		1F9CC66C2B103440004DB9B3 /* PageListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC66B2B103440004DB9B3 /* PageListFeature.swift */; };
+		1F9CC66E2B10344D004DB9B3 /* PageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC66D2B10344D004DB9B3 /* PageListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,17 +76,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1F1785052B11894500F520E9 /* MakeGoldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeGoldView.swift; sourceTree = "<group>"; };
 		1F1ABF792B110B0D0060FDEF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		1F5282E32B16C34A000F5260 /* MakeGoldFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeGoldFeature.swift; sourceTree = "<group>"; };
+		1F4C8AD82B2BD75200DD09AE /* EditPageFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPageFeature.swift; sourceTree = "<group>"; };
 		1F5282E52B16C65E000F5260 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F5283202B16CF49000F5260 /* FirestoreNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreNetworking.swift; sourceTree = "<group>"; };
 		1F5283222B16CF86000F5260 /* Codable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Extensions.swift"; sourceTree = "<group>"; };
-		1F5283282B16D575000F5260 /* AddonsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddonsFeature.swift; sourceTree = "<group>"; };
-		1F52832A2B16D57F000F5260 /* AddonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddonsView.swift; sourceTree = "<group>"; };
 		1F52832E2B16E42A000F5260 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		1F5283302B16F0C2000F5260 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		1F5283312B16F30E000F5260 /* World-of-Wealth-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "World-of-Wealth-Info.plist"; sourceTree = SOURCE_ROOT; };
+		1F5283322B193524000F5260 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
+		1F5283352B1936F1000F5260 /* PageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageClient.swift; sourceTree = "<group>"; };
+		1F5283372B193F4A000F5260 /* PageNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNetworking.swift; sourceTree = "<group>"; };
+		1F52833A2B19423A000F5260 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		1F52833C2B194728000F5260 /* PageFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageFeature.swift; sourceTree = "<group>"; };
 		1F9CC6332B0F236A004DB9B3 /* World of Wealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "World of Wealth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F9CC6362B0F236A004DB9B3 /* World_of_WealthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World_of_WealthApp.swift; sourceTree = "<group>"; };
 		1F9CC63A2B0F236B004DB9B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -96,8 +100,8 @@
 		1F9CC6532B0F236B004DB9B3 /* World_of_WealthUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World_of_WealthUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1F9CC6652B0F26B2004DB9B3 /* FeatureAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureAction.swift; sourceTree = "<group>"; };
 		1F9CC6672B0F2745004DB9B3 /* TemplateFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateFeature.swift; sourceTree = "<group>"; };
-		1F9CC66B2B103440004DB9B3 /* GetStartedFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartedFeature.swift; sourceTree = "<group>"; };
-		1F9CC66D2B10344D004DB9B3 /* GetStartedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartedView.swift; sourceTree = "<group>"; };
+		1F9CC66B2B103440004DB9B3 /* PageListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageListFeature.swift; sourceTree = "<group>"; };
+		1F9CC66D2B10344D004DB9B3 /* PageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,23 +158,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1F1785032B11893000F520E9 /* GettingStarted */ = {
+		1F1785032B11893000F520E9 /* PageList */ = {
 			isa = PBXGroup;
 			children = (
-				1F5283272B16D565000F5260 /* Addons */,
-				1F9CC66B2B103440004DB9B3 /* GetStartedFeature.swift */,
-				1F9CC66D2B10344D004DB9B3 /* GetStartedView.swift */,
+				1F9CC66B2B103440004DB9B3 /* PageListFeature.swift */,
+				1F9CC66D2B10344D004DB9B3 /* PageListView.swift */,
 			);
-			path = GettingStarted;
-			sourceTree = "<group>";
-		};
-		1F1785042B11893900F520E9 /* MakeGold */ = {
-			isa = PBXGroup;
-			children = (
-				1F5282E32B16C34A000F5260 /* MakeGoldFeature.swift */,
-				1F1785052B11894500F520E9 /* MakeGoldView.swift */,
-			);
-			path = MakeGold;
+			path = PageList;
 			sourceTree = "<group>";
 		};
 		1F1ABF782B110B070060FDEF /* Styles */ = {
@@ -184,18 +178,10 @@
 		1F52831F2B16CF1A000F5260 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				1F5283202B16CF49000F5260 /* FirestoreNetworking.swift */,
+				1F5283352B1936F1000F5260 /* PageClient.swift */,
+				1F5283342B1936A8000F5260 /* Networking */,
 			);
 			path = Utility;
-			sourceTree = "<group>";
-		};
-		1F5283272B16D565000F5260 /* Addons */ = {
-			isa = PBXGroup;
-			children = (
-				1F5283282B16D575000F5260 /* AddonsFeature.swift */,
-				1F52832A2B16D57F000F5260 /* AddonsView.swift */,
-			);
-			path = Addons;
 			sourceTree = "<group>";
 		};
 		1F52832C2B16DB90000F5260 /* ci_scripts */ = {
@@ -205,6 +191,33 @@
 				1F5283302B16F0C2000F5260 /* ci_pre_xcodebuild.sh */,
 			);
 			path = ci_scripts;
+			sourceTree = "<group>";
+		};
+		1F5283342B1936A8000F5260 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				1F5283202B16CF49000F5260 /* FirestoreNetworking.swift */,
+				1F5283372B193F4A000F5260 /* PageNetworking.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		1F5283392B194230000F5260 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1F52833A2B19423A000F5260 /* Page.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1F52833E2B19472E000F5260 /* PageView */ = {
+			isa = PBXGroup;
+			children = (
+				1F4C8AD82B2BD75200DD09AE /* EditPageFeature.swift */,
+				1F52833C2B194728000F5260 /* PageFeature.swift */,
+				1F5283322B193524000F5260 /* PageView.swift */,
+			);
+			path = PageView;
 			sourceTree = "<group>";
 		};
 		1F9CC62A2B0F236A004DB9B3 = {
@@ -232,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				1F5283312B16F30E000F5260 /* World-of-Wealth-Info.plist */,
+				1F5283392B194230000F5260 /* Models */,
 				1F52831F2B16CF1A000F5260 /* Utility */,
 				1F5282E52B16C65E000F5260 /* GoogleService-Info.plist */,
 				1F1ABF782B110B070060FDEF /* Styles */,
@@ -290,8 +304,8 @@
 		1F9CC6692B0FD1B8004DB9B3 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				1F1785042B11893900F520E9 /* MakeGold */,
-				1F1785032B11893000F520E9 /* GettingStarted */,
+				1F52833E2B19472E000F5260 /* PageView */,
+				1F1785032B11893000F520E9 /* PageList */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -464,16 +478,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F9CC6682B0F2745004DB9B3 /* TemplateFeature.swift in Sources */,
-				1F9CC66E2B10344D004DB9B3 /* GetStartedView.swift in Sources */,
-				1F5283292B16D575000F5260 /* AddonsFeature.swift in Sources */,
+				1F4C8AD92B2BD75200DD09AE /* EditPageFeature.swift in Sources */,
+				1F9CC66E2B10344D004DB9B3 /* PageListView.swift in Sources */,
 				1F1ABF7A2B110B0D0060FDEF /* Colors.swift in Sources */,
-				1F1785062B11894500F520E9 /* MakeGoldView.swift in Sources */,
+				1F5283362B1936F1000F5260 /* PageClient.swift in Sources */,
+				1F52833B2B19423A000F5260 /* Page.swift in Sources */,
+				1F52833D2B194728000F5260 /* PageFeature.swift in Sources */,
+				1F5283332B193524000F5260 /* PageView.swift in Sources */,
 				1F9CC6662B0F26B2004DB9B3 /* FeatureAction.swift in Sources */,
-				1F9CC66C2B103440004DB9B3 /* GetStartedFeature.swift in Sources */,
+				1F9CC66C2B103440004DB9B3 /* PageListFeature.swift in Sources */,
+				1F5283382B193F4A000F5260 /* PageNetworking.swift in Sources */,
 				1F9CC6372B0F236A004DB9B3 /* World_of_WealthApp.swift in Sources */,
-				1F5282E42B16C34A000F5260 /* MakeGoldFeature.swift in Sources */,
 				1F5283212B16CF49000F5260 /* FirestoreNetworking.swift in Sources */,
-				1F52832B2B16D57F000F5260 /* AddonsView.swift in Sources */,
 				1F5283232B16CF86000F5260 /* Codable+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -55,3 +55,7 @@ extension Encodable {
 struct DefaultDateNowStrategy: DefaultCodableStrategy {
     static var defaultValue: Date { .now }
 }
+
+struct DefaultEmptyContentBlocksStrategy: DefaultCodableStrategy {
+    static var defaultValue: IdentifiedArrayOf<ContentBlock> { .init() }
+}

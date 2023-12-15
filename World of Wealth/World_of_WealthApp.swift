@@ -49,7 +49,8 @@ struct AppFeature {
 
     struct State: Equatable {
         var tab: Tab = .get_started
-        var getStartedState: GetStartedFeature.State = .init()
+        var getStartedPageListState: PageListFeature.State = .init(pageIDs: Page.ID.getStartedIDs)
+        var makeGoldPageListState: PageListFeature.State = .init(pageIDs: Page.ID.makeGoldIDs)
     }
 
     enum Action: Equatable, FeatureAction {
@@ -68,7 +69,8 @@ struct AppFeature {
         case view(ViewAction)
         case reducer(ReducerAction)
         case delegate(DelegateAction)
-        case getStarted(GetStartedFeature.Action)
+        case getStartedPageList(PageListFeature.Action)
+        case makeGoldPageList(PageListFeature.Action)
     }
 
     var body: some Reducer<State, Action> {
@@ -87,13 +89,17 @@ struct AppFeature {
                     }
                 case .delegate:
                     return .none
-                case .getStarted:
+                case .getStartedPageList, .makeGoldPageList:
                     return .none
                 }
             }
 
-            Scope(state: \.getStartedState, action: \.getStarted) {
-                GetStartedFeature()
+            Scope(state: \.getStartedPageListState, action: \.getStartedPageList) {
+                PageListFeature()
+            }
+
+            Scope(state: \.makeGoldPageListState, action: \.makeGoldPageList) {
+                PageListFeature()
             }
         }
     }
@@ -105,7 +111,8 @@ extension AppFeature {
         var settingsMenuIsVisible: Bool
         init(_ state: State) {
             tab = state.tab
-            settingsMenuIsVisible = state.getStartedState.selectedElement == nil
+            settingsMenuIsVisible = state.getStartedPageListState.selectedPageState == nil
+                && state.makeGoldPageListState.selectedPageState == nil
         }
     }
 }
@@ -138,9 +145,9 @@ struct World_of_WealthApp: App {
                             ForEach(AppFeature.Tab.allCases) { tab in
                                 switch tab {
                                 case .get_started:
-                                    GetStartedView(store: store.scope(state: \.getStartedState, action: AppFeature.Action.getStarted))
+                                    PageListView(store: store.scope(state: \.getStartedPageListState, action: AppFeature.Action.getStartedPageList))
                                 case .make_gold:
-                                    MakeGoldView()
+                                    PageListView(store: store.scope(state: \.makeGoldPageListState, action: AppFeature.Action.makeGoldPageList))
                                 case .community:
                                     Text(tab.rawValue.replacingOccurrences(of: "_", with: " ").uppercased())
                                 }
@@ -198,15 +205,3 @@ struct World_of_WealthApp: App {
         }
     }
 }
-
-struct Page: Equatable {
-    var id: String
-    var contentBlock: [ContentBlock]
-}
-
-enum ContentBlock: Equatable {
-    case title(String)
-    case paragraph(String)
-    case image(String) // URL
-}
-
