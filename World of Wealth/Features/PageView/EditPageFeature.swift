@@ -81,3 +81,52 @@ struct EditPageFeature {
         }
     }
 }
+
+@Reducer
+struct ContentBlockEditFeature {
+    typealias State = ContentBlock
+
+    enum Action: Equatable, FeatureAction {
+        enum ViewAction: Equatable {
+            case updateContentBlock(String)
+        }
+
+        enum ReducerAction: Equatable {
+
+        }
+
+        enum DelegateAction: Equatable {
+
+        }
+
+        case view(ViewAction)
+        case reducer(ReducerAction)
+        case delegate(DelegateAction)
+    }
+
+    var body: some Reducer<ContentBlock, Action> {
+        Reduce { state, action in
+            switch action {
+            case let .view(action):
+                switch action {
+                case let .updateContentBlock(value):
+                    switch state {
+                    case let .title(title):
+                        state = .title(.init(id: title.id, value: value))
+                    case let .paragraph(paragraph):
+                        state = .paragraph(.init(id: paragraph.id, value: value))
+                    default:
+                        break
+                    }
+                    return .none
+                }
+            case let .reducer(action):
+                switch action {
+
+                }
+            case .delegate:
+                return .none
+            }
+        }
+    }
+}

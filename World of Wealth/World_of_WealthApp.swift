@@ -85,6 +85,7 @@ struct AppFeature {
                         state.tab = tab
                         return .none
                     case let .didTapTab(tab):
+                        HapticsManager.soft()
                         if state.tab == tab {
                             switch tab {
                             case .get_started:

@@ -10,6 +10,8 @@
 		1F1ABF7A2B110B0D0060FDEF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABF792B110B0D0060FDEF /* Colors.swift */; };
 		1F4C8AD92B2BD75200DD09AE /* EditPageFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C8AD82B2BD75200DD09AE /* EditPageFeature.swift */; };
 		1F4C8ADB2B2BF7FC00DD09AE /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C8ADA2B2BF7FC00DD09AE /* View+Extensions.swift */; };
+		1F4C8ADD2B2C0A7D00DD09AE /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C8ADC2B2C0A7D00DD09AE /* HapticsManager.swift */; };
+		1F4C8ADF2B2D1BD700DD09AE /* EditPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C8ADE2B2D1BD700DD09AE /* EditPageView.swift */; };
 		1F5282E62B16C65E000F5260 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F5282E52B16C65E000F5260 /* GoogleService-Info.plist */; };
 		1F5282EA2B16C8D7000F5260 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1F5282E92B16C8D7000F5260 /* FirebaseAnalytics */; };
 		1F5282EC2B16C8D7000F5260 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 1F5282EB2B16C8D7000F5260 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -80,6 +82,8 @@
 		1F1ABF792B110B0D0060FDEF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		1F4C8AD82B2BD75200DD09AE /* EditPageFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPageFeature.swift; sourceTree = "<group>"; };
 		1F4C8ADA2B2BF7FC00DD09AE /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		1F4C8ADC2B2C0A7D00DD09AE /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
+		1F4C8ADE2B2D1BD700DD09AE /* EditPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPageView.swift; sourceTree = "<group>"; };
 		1F5282E52B16C65E000F5260 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F5283202B16CF49000F5260 /* FirestoreNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreNetworking.swift; sourceTree = "<group>"; };
 		1F5283222B16CF86000F5260 /* Codable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Extensions.swift"; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 		1F52831F2B16CF1A000F5260 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				1F4C8ADC2B2C0A7D00DD09AE /* HapticsManager.swift */,
 				1F5283352B1936F1000F5260 /* PageClient.swift */,
 				1F5283342B1936A8000F5260 /* Networking */,
 			);
@@ -216,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				1F4C8AD82B2BD75200DD09AE /* EditPageFeature.swift */,
+				1F4C8ADE2B2D1BD700DD09AE /* EditPageView.swift */,
 				1F52833C2B194728000F5260 /* PageFeature.swift */,
 				1F5283322B193524000F5260 /* PageView.swift */,
 			);
@@ -247,9 +253,9 @@
 			isa = PBXGroup;
 			children = (
 				1F5283312B16F30E000F5260 /* World-of-Wealth-Info.plist */,
+				1F5282E52B16C65E000F5260 /* GoogleService-Info.plist */,
 				1F5283392B194230000F5260 /* Models */,
 				1F52831F2B16CF1A000F5260 /* Utility */,
-				1F5282E52B16C65E000F5260 /* GoogleService-Info.plist */,
 				1F1ABF782B110B070060FDEF /* Styles */,
 				1F9CC6362B0F236A004DB9B3 /* World_of_WealthApp.swift */,
 				1F9CC6692B0FD1B8004DB9B3 /* Features */,
@@ -484,8 +490,10 @@
 				1F4C8AD92B2BD75200DD09AE /* EditPageFeature.swift in Sources */,
 				1F9CC66E2B10344D004DB9B3 /* PageListView.swift in Sources */,
 				1F1ABF7A2B110B0D0060FDEF /* Colors.swift in Sources */,
+				1F4C8ADF2B2D1BD700DD09AE /* EditPageView.swift in Sources */,
 				1F5283362B1936F1000F5260 /* PageClient.swift in Sources */,
 				1F52833B2B19423A000F5260 /* Page.swift in Sources */,
+				1F4C8ADD2B2C0A7D00DD09AE /* HapticsManager.swift in Sources */,
 				1F52833D2B194728000F5260 /* PageFeature.swift in Sources */,
 				1F5283332B193524000F5260 /* PageView.swift in Sources */,
 				1F9CC6662B0F26B2004DB9B3 /* FeatureAction.swift in Sources */,
