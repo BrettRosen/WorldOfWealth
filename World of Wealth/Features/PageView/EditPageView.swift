@@ -33,8 +33,11 @@ struct EditPageView: View {
 
                         ContentBlockEditView(store: store)
                     }
+                    .onDelete { indexSet in
+                        viewStore.send(.didTapDelete(indexSet), animation: .default)
+                    }
                     .onMove { from, to in
-                        //viewStore.send()
+                        viewStore.send(.didMove(from: from, to: to), animation: .default)
                     }
                     .padding(.horizontal, 16)
                 }
@@ -43,12 +46,12 @@ struct EditPageView: View {
                     HStack(spacing: 16) {
                         Menu("", systemImage: "plus") {
                             Button(action: {
-                                viewStore.send(.didTapAddContent(.title(.init(value: "Title"))))
+                                viewStore.send(.didTapAddContent(.title(.init(value: ""))))
                             }) {
                                 Text("Title")
                             }
                             Button(action: {
-                                viewStore.send(.didTapAddContent(.paragraph(.init(value: "Paragraph"))))
+                                viewStore.send(.didTapAddContent(.paragraph(.init(value: ""))))
                             }) {
                                 Text("Paragraph")
                             }

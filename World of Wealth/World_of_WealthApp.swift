@@ -126,11 +126,11 @@ struct AppFeature {
 extension AppFeature {
     struct ViewState: Equatable {
         var tab: Tab
-        var settingsMenuIsVisible: Bool
+        var aPageIsActive: Bool
         init(_ state: State) {
             tab = state.tab
-            settingsMenuIsVisible = state.getStartedPageListState.selectedPageState == nil
-                && state.makeGoldPageListState.selectedPageState == nil
+            aPageIsActive = state.getStartedPageListState.selectedPageState != nil
+                || state.makeGoldPageListState.selectedPageState != nil
         }
     }
 }
@@ -164,10 +164,14 @@ struct World_of_WealthApp: App {
                                 switch tab {
                                 case .get_started:
                                     PageListView(store: store.scope(state: \.getStartedPageListState, action: AppFeature.Action.getStartedPageList))
+                                        // This and the below gestures are to prevent swiping horizontally when a detail page is active
+                                        .gesture(viewStore.aPageIsActive ? DragGesture() : nil)
                                 case .make_gold:
                                     PageListView(store: store.scope(state: \.makeGoldPageListState, action: AppFeature.Action.makeGoldPageList))
+                                        .gesture(viewStore.aPageIsActive ? DragGesture() : nil)
                                 case .community:
                                     Text(tab.rawValue.replacingOccurrences(of: "_", with: " ").uppercased())
+                                        .gesture(viewStore.aPageIsActive ? DragGesture() : nil)
                                 }
                             }
                         }
@@ -187,7 +191,7 @@ struct World_of_WealthApp: App {
                                         .shadow(color: .primary.opacity(0.1), radius: 0, x: 1, y: 1)
                                 }
                                 .padding(16)
-                                .opacity(viewStore.settingsMenuIsVisible ? 1 : 0)
+                                .opacity(viewStore.aPageIsActive ? 0 : 1)
                         }
                         .buttonStyle(.plain)
                     }

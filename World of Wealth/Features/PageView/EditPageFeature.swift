@@ -27,6 +27,8 @@ struct EditPageFeature {
     enum Action: FeatureAction {
         enum ViewAction: Equatable {
             case didTapAddContent(ContentBlock)
+            case didTapDelete(IndexSet)
+            case didMove(from: IndexSet, to: Int)
             case didTapCompleteEdit
             case didTapCancel
         }
@@ -53,6 +55,12 @@ struct EditPageFeature {
                 switch action {
                 case let .didTapAddContent(content):
                     state.page.content.append(content)
+                    return .none
+                case let .didTapDelete(indexSet):
+                    state.page.content.remove(atOffsets: indexSet)
+                    return .none
+                case let .didMove(from, to):
+                    state.page.content.move(fromOffsets: from, toOffset: to)
                     return .none
                 case .didTapCompleteEdit:
                     return .run { [state] send in
