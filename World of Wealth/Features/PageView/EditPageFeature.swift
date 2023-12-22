@@ -123,6 +123,8 @@ struct ContentBlockEditFeature {
                         state = .title(.init(id: title.id, value: value))
                     case let .paragraph(paragraph):
                         state = .paragraph(.init(id: paragraph.id, value: value))
+                    case let .hyperlink(hyperlink):
+                        state = .hyperlink(.init(label: hyperlink.label, url: hyperlink.url))
                     default:
                         break
                     }
