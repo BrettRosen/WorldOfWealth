@@ -93,6 +93,17 @@ enum ContentBlock: Equatable, Codable, Identifiable {
         case let .hyperlink(hyperlink): return hyperlink.id
         }
     }
+    
+    var isEmpty: Bool {
+        switch self {
+        case let .title(title): return title.value.isEmpty
+        case let .paragraph(paragraph): return paragraph.value.isEmpty
+        case let .image(url): return url.isEmpty
+        case let .divider(id): return false
+        case let .spacer(id): return false
+        case let .hyperlink(hyperlink): return hyperlink.label.isEmpty || hyperlink.urlString.isEmpty
+        }
+    }
 }
 
 struct ContentTitle: Equatable, Codable, Identifiable {

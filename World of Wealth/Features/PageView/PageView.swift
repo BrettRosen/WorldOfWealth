@@ -49,8 +49,8 @@ struct PageView: View {
                                         Text(paragraph.value)
                                             .font(.body)
                                     case let .hyperlink(hyperlink):
-                                        Text(hyperlink.label)
-                                            .font(.body)
+                                        Link(hyperlink.label, destination: URL(string: hyperlink.urlString)!)
+                                            .font(.title)
                                     case let .image(url):
                                         AsyncImage(url: URL(string: url)) { image in
                                             image
