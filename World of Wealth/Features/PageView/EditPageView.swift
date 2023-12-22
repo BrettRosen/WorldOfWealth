@@ -86,7 +86,6 @@ struct EditPageView: View {
                         }
                         .buttonStyle(.plain)
                     }
-                    .padding(16)
                     .animation(.easeIn.delay(0.2)) { content in
                         content.opacity(didAppear ? 1 : 0)
                     }
@@ -119,12 +118,13 @@ struct ContentBlockEditView: View {
                 TextField("Title textfield", text: viewStore.binding(get: { state in
                     title.value
                 }, send: ContentBlockEditFeature.Action.ViewAction.updateContentBlock), prompt: Text("Title"))
-                    .font(.title)
+                    .font(.caption)
+                    .fontWeight(.bold)
             case let .paragraph(paragraph):
                 TextField("Paragraph textfield", text: viewStore.binding(get: { state in
                     paragraph.value
                 }, send: ContentBlockEditFeature.Action.ViewAction.updateContentBlock), prompt: Text("Paragraph"))
-                    .font(.body)
+                    .font(.caption)
             case let .image(url):
                 AsyncImage(url: URL(string: url)) { image in
                     image
@@ -137,12 +137,14 @@ struct ContentBlockEditView: View {
                         .rotationEffect(.degrees(90))
                     Text("Divider")
                 }
+                .font(.caption)
             case .spacer:
                 HStack {
                     Image(systemName: "space")
                         .rotationEffect(.degrees(90))
                     Text("Spacer")
                 }
+                .font(.caption)
             }
         }
     }

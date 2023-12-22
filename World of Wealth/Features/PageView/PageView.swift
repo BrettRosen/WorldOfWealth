@@ -34,6 +34,9 @@ struct PageView: View {
         WithViewStore(store, observe: PageFeature.ViewState.init, send: PageFeature.Action.view) { viewStore in
 
             ZStack {
+                viewStore.pageID.color
+                    .ignoresSafeArea()
+
                 SwitchStore(self.store.scope(state: \.pageState, action: \.self)) { pageState in
 
                     switch pageState {
@@ -44,10 +47,10 @@ struct PageView: View {
                                     switch contentBlock {
                                     case let .title(title):
                                         Text(title.value)
-                                            .font(.title)
+                                            .font(.title2)
                                     case let .paragraph(paragraph):
                                         Text(paragraph.value)
-                                            .font(.body)
+                                            .font(.callout)
                                     case let .image(url):
                                         AsyncImage(url: URL(string: url)) { image in
                                             image
@@ -66,6 +69,9 @@ struct PageView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 16)
                             .padding(.vertical, screen.height / 4)
+                            .animation(.easeIn.delay(0.4)) { content in
+                                content.opacity(didAppear ? 1 : 0)
+                            }
                         }
                         .scrollIndicators(.hidden)
 
@@ -95,6 +101,7 @@ struct PageView: View {
                                     .font(.footnote)
                                     .foregroundStyle(viewStore.pageID.color.opacity(0.6))
                                     .brightness(colorScheme == .dark ? 0.9 : 0)
+                                    .matchedGeometryEffect(id: viewStore.pageID.description, in: namespace)
                             }
                             .opacity(max(0.0, 1.0 - (scrollOffset.y / 100.0)))
 

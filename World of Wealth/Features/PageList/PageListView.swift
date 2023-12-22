@@ -60,12 +60,15 @@ struct ImageBlurRowView: View {
                             .frame(maxWidth: .infinity)
                             .foregroundStyle(color)
                             .brightness(colorScheme == .dark ? 0.9 : 0)
+                            .matchedGeometryEffect(id: title, in: namespace)
                     }
                     Text(description.uppercased())
                         .fontWidth(.condensed)
                         .font(.caption2)
                         .foregroundStyle(color.opacity(0.6))
                         .brightness(colorScheme == .dark ? 0.9 : 0)
+                        .matchedGeometryEffect(id: description, in: namespace)
+
                     Spacer()
                 }
                 .padding(.top, imageExists ? 30 : 0)
