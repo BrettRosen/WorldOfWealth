@@ -26,11 +26,9 @@ struct EditPageView: View {
 
     var body: some View {
         WithViewStore(store, observe: EditPageFeature.ViewState.init, send: EditPageFeature.Action.view) { viewStore in
-
             ZStack {
                 List {
                     ForEachStore(store.scope(state: \.page.content, action: EditPageFeature.Action.editingContentBlock)) { store in
-
                         ContentBlockEditView(store: store)
                     }
                     .onDelete { indexSet in
@@ -129,7 +127,7 @@ struct ContentBlockEditView: View {
                 TextField("Paragraph textfield", text: viewStore.binding(get: { state in
                     paragraph.value
                 }, send: ContentBlockEditFeature.Action.ViewAction.updateContentBlock), prompt: Text("Paragraph"))
-                    .font(.body)
+                    .font(.caption2)
             case let .hyperlink(hyperlink):
                 VStack {
                     TextField(
@@ -139,6 +137,7 @@ struct ContentBlockEditView: View {
                             send: ContentBlockEditFeature.Action.ViewAction.updateContentBlock),
                         prompt: Text("Link Title")
                     )
+                    .font(.caption2)
                     TextField(
                         "Link textfield url",
                         text: viewStore.binding(
@@ -146,6 +145,7 @@ struct ContentBlockEditView: View {
                             send: ContentBlockEditFeature.Action.ViewAction.updateHyperlinkURL),
                         prompt: Text("Link URL")
                     )
+                    .font(.caption2)
                 }
             case let .image(url):
                 AsyncImage(url: URL(string: url)) { image in
@@ -159,14 +159,14 @@ struct ContentBlockEditView: View {
                         .rotationEffect(.degrees(90))
                     Text("Divider")
                 }
-                .font(.caption)
+                .font(.caption2)
             case .spacer:
                 HStack {
                     Image(systemName: "space")
                         .rotationEffect(.degrees(90))
                     Text("Spacer")
                 }
-                .font(.caption)
+                .font(.caption2)
             }
         }
     }

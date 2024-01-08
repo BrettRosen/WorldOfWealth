@@ -176,6 +176,7 @@ struct World_of_WealthApp: App {
                             }
                         }
                         .tabViewStyle(.page(indexDisplayMode: .never))
+                        .ignoresSafeArea()
 
                         Button(action: {
 
@@ -196,32 +197,35 @@ struct World_of_WealthApp: App {
                         .buttonStyle(.plain)
                     }
 
-                    HStack {
-                        ForEach(AppFeature.Tab.allCases) { tab in
-                            Spacer()
-                            let isSelected = tab == viewStore.tab
-                            Button(action: {
-                                viewStore.send(.didTapTab(tab), animation: .default)
-                            }) {
-                                VStack(spacing: 8) {
-                                    Image(systemName: isSelected ? (tab.imageName + ".fill") : tab.imageName)
-                                        .contentTransition(isSelected ? .symbolEffect(.replace) : .identity)
-                                        .font(.title3)
-                                    Text(tab.rawValue.replacingOccurrences(of: "_", with: " ").uppercased())
-                                        .fontWidth(.condensed)
-                                        .font(.caption2)
+                    if !viewStore.aPageIsActive {
+                        HStack {
+                            ForEach(AppFeature.Tab.allCases) { tab in
+                                Spacer()
+                                let isSelected = tab == viewStore.tab
+                                Button(action: {
+                                    viewStore.send(.didTapTab(tab), animation: .default)
+                                }) {
+                                    VStack(spacing: 8) {
+                                        Image(systemName: isSelected ? (tab.imageName + ".fill") : tab.imageName)
+                                            .contentTransition(isSelected ? .symbolEffect(.replace) : .identity)
+                                            .font(.title3)
+                                        Text(tab.rawValue.replacingOccurrences(of: "_", with: " ").uppercased())
+                                            .fontWidth(.condensed)
+                                            .font(.caption2)
+                                    }
+                                    .fontWeight(isSelected ? .semibold : .regular)
+                                    .foregroundStyle(isSelected ? .primary : .secondary)
+                                    .sensoryFeedback(.impact(flexibility: .soft), trigger: isSelected)
+                                    .frame(height: 40)
                                 }
-                                .fontWeight(isSelected ? .semibold : .regular)
-                                .foregroundStyle(isSelected ? .primary : .secondary)
-                                .sensoryFeedback(.impact(flexibility: .soft), trigger: isSelected)
-                                .frame(height: 40)
+                                .buttonStyle(.plain)
+                                Spacer()
                             }
-                            .buttonStyle(.plain)
-                            Spacer()
                         }
+                        .padding(.vertical, 4)
+                        .padding(.top, 12)
+                        .transition(.move(edge: .bottom))
                     }
-                    .padding(.vertical, 4)
-                    .padding(.top, 12)
                 }
             }
         }

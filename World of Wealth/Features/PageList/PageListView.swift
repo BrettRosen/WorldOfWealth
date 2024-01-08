@@ -27,12 +27,12 @@ struct ImageBlurRowView: View {
         Button(action: didTap) {
             ZStack(alignment: .bottom) {
                 SemicircleShape()
-                    .fill(color.opacity(0.3))
+                    .fill(color.opacity(0.65))
                     .frame(height: imageExists ? 250 : 120)
                     .blur(radius: 90)
                     .offset(y: imageExists ? 0 : 150)
                     .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-                    .brightness(0.6)
+                    .brightness(-0.6)
 
                 if let imageName = imageName {
                     Image(imageName)
@@ -41,6 +41,7 @@ struct ImageBlurRowView: View {
                         .frame(height: 200)
                         .offset(y: 120)
                         .clipped()
+                        .matchedGeometryEffect(id: imageName, in: namespace)
                 }
 
                 VStack(spacing: 4) {
@@ -49,25 +50,23 @@ struct ImageBlurRowView: View {
                             Text(title)
                                 .font(.title2)
                                 .frame(maxWidth: .infinity)
-                                .foregroundStyle(color)
+                                .foregroundStyle(colorScheme == .dark ? color : .black)
                                 .brightness(colorScheme == .dark ? 0.9 : 0)
-                                .matchedGeometryEffect(id: title, in: namespace)
                         }
                     } else {
                         Spacer()
                         Text(title)
                             .font(.title2)
                             .frame(maxWidth: .infinity)
-                            .foregroundStyle(color)
+                            .foregroundStyle(colorScheme == .dark ? color : .black)
                             .brightness(colorScheme == .dark ? 0.9 : 0)
-                            .matchedGeometryEffect(id: title, in: namespace)
                     }
                     Text(description.uppercased())
                         .fontWidth(.condensed)
                         .font(.caption2)
-                        .foregroundStyle(color.opacity(0.6))
+                        .foregroundStyle(colorScheme == .dark ? color : .black)
+                        .opacity(0.6)
                         .brightness(colorScheme == .dark ? 0.9 : 0)
-                        .matchedGeometryEffect(id: description, in: namespace)
 
                     Spacer()
                 }
@@ -79,9 +78,8 @@ struct ImageBlurRowView: View {
             .background {
                 RoundedRectangle(cornerRadius: 30, style: .continuous)
                     .fill(.thinMaterial)
-                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 10)
             }
-            .background(Color.primary.opacity(0.2), in: RoundedRectangle(cornerRadius: 30, style: .continuous).stroke())
+            .background(colorScheme == .dark ? .black.opacity(0.2) : color, in: RoundedRectangle(cornerRadius: 30, style: .continuous).stroke())
         }
         .buttonStyle(.plain)
     }
@@ -125,10 +123,10 @@ struct PageListView: View {
                         }
                         .padding(.top, 64)
                     }
+                    .contentMargins(.horizontal, 8)
                     .scrollIndicators(.hidden)
                 }
             }
-            .padding(.horizontal, 8)
         }
     }
 }

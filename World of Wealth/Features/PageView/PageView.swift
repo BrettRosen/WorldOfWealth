@@ -23,59 +23,88 @@ extension PageFeature {
 struct PageView: View {
     @Environment(\.colorScheme) private var colorScheme
     // For animations
-    @State private var didAppear: Bool = false
+    @State private var animateContent: Bool = false
     @State private var scrollOffset: CGPoint = .zero
 
     let store: StoreOf<PageFeature>
     let namespace: Namespace.ID
     var didTapExit: () -> Void
 
+    private func getGradient(from color: Color) -> Color {
+        let value = min(0.9, scrollOffset.y / screen.height) * 1.2
+        return color.opacity(value)
+    }
+
     var body: some View {
         WithViewStore(store, observe: PageFeature.ViewState.init, send: PageFeature.Action.view) { viewStore in
+            ZStack(alignment: .top) {
+                Image(viewStore.pageID.imageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: screen.width)
+                    .clipped()
+                    .matchedGeometryEffect(id: viewStore.pageID.imageName, in: namespace)
 
-            ZStack {
-//                viewStore.pageID.color
-//                    .ignoresSafeArea()
-//
+                Color.matching.opacity(0.75)
+
+                LinearGradient(colors: [viewStore.pageID.color.opacity(0.9), getGradient(from: viewStore.pageID.color), getGradient(from: viewStore.pageID.color)], startPoint: .bottom, endPoint: .top)
+                    .ignoresSafeArea(edges: .all)
+                    .opacity(animateContent ? 1 : 0)
+                    .brightness(-0.6)
 
                 SwitchStore(self.store.scope(state: \.pageState, action: \.self)) { pageState in
-
                     switch pageState {
                     case let .page(page):
                         OffsetObservingScrollView(offset: $scrollOffset) {
                             VStack(alignment: .leading, spacing: 12) {
-                                ForEach(page.content) { contentBlock in
-                                    switch contentBlock {
-                                    case let .title(title):
-                                        Text(title.value)
-                                            .font(.title2)
-                                    case let .paragraph(paragraph):
-                                        Text(paragraph.value)
-                                            .font(.body)
-                                    case let .hyperlink(hyperlink):
-                                        Link(hyperlink.label, destination: URL(string: hyperlink.urlString)!)
-                                            .font(.title)
-                                    case let .image(url):
-                                        AsyncImage(url: URL(string: url)) { image in
-                                            image
-                                        } placeholder: {
+                                Rectangle()
+                                    .fill(.clear)
+                                    .frame(height: screen.height * 0.5)
+
+                                VStack(alignment: .leading, spacing: 6) {
+                                    Text(viewStore.pageID.title)
+                                        .foregroundStyle(.white)
+                                        .font(.largeTitle)
+                                    Text(viewStore.pageID.description.uppercased())
+                                        .fontWidth(.condensed)
+                                        .font(.footnote)
+                                        .foregroundStyle(viewStore.pageID.color.opacity(0.6))
+                                        .brightness(0.9)
+                                }
+                                .fontWeight(.semibold)
+                                .padding(.bottom, 16)
+
+                                VStack(alignment: .leading, spacing: 12) {
+                                    ForEach(page.content) { contentBlock in
+                                        switch contentBlock {
+                                        case let .title(title):
+                                            Text(title.value)
+                                                .font(.title2)
+                                        case let .paragraph(paragraph):
+                                            Text(paragraph.value)
+                                                .font(.body)
+                                        case let .hyperlink(hyperlink):
+                                            Link(hyperlink.label, destination: URL(string: hyperlink.urlString)!)
+                                                .font(.title)
+                                        case let .image(url):
+                                            AsyncImage(url: URL(string: url)) { image in
+                                                image
+                                            } placeholder: {
+                                                Rectangle()
+                                            }
+                                        case .divider:
+                                            Divider()
+                                        case .spacer:
                                             Rectangle()
+                                                .frame(height: 32)
+                                                .opacity(0.005)
                                         }
-                                    case .divider:
-                                        Divider()
-                                    case .spacer:
-                                        Rectangle()
-                                            .frame(height: 32)
-                                            .opacity(0.005)
                                     }
                                 }
+                                .foregroundStyle(.white)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 16)
-                            .padding(.vertical, screen.height / 4)
-                            .animation(.easeIn.delay(0.4)) { content in
-                                content.opacity(didAppear ? 1 : 0)
-                            }
                         }
                         .scrollIndicators(.hidden)
 
@@ -90,56 +119,35 @@ struct PageView: View {
                     case .error:
                         Text("Error")
                     }
-
-                    VStack {
-                        HStack(alignment: .top) {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text(viewStore.pageID.title)
-                                    .foregroundStyle(viewStore.pageID.color)
-                                    .brightness(colorScheme == .dark ? 0.95 : 0)
-                                    .matchedGeometryEffect(id: viewStore.pageID.title, in: namespace)
-                                    .font(.largeTitle)
-                                    .fontWeight(.semibold)
-                                Text(viewStore.pageID.description.uppercased())
-                                    .fontWidth(.condensed)
-                                    .font(.footnote)
-                                    .foregroundStyle(viewStore.pageID.color.opacity(0.6))
-                                    .brightness(colorScheme == .dark ? 0.9 : 0)
-                                    .matchedGeometryEffect(id: viewStore.pageID.description, in: namespace)
-                            }
-                            .opacity(max(0.0, 1.0 - (scrollOffset.y / 100.0)))
-
-                            Spacer()
-                            Button(action: {
-                                viewStore.send(.didTapEdit, animation: .default)
-                            }) {
-                                Image(systemName: "pencil")
-                            }
-                            .buttonStyle(.plain)
-                            Button(action: didTapExit) {
-                                Image(systemName: "xmark")
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        .animation(.easeIn.delay(0.2)) { content in
-                            content.opacity(didAppear ? 1 : 0)
-                        }
-
-                        Spacer()
-                    }
-                    .padding(16)
-                    .opacity({
-                        if case .editing = viewStore.pageState {
-                            return 0
-                        } else {
-                            return 1
-                        }
-                    }())
                 }
+
+                HStack(alignment: .top) {
+                    Spacer()
+                    Button(action: {
+                        viewStore.send(.didTapEdit, animation: .default)
+                    }) {
+                        Image(systemName: "pencil")
+                    }
+                    .buttonStyle(.plain)
+                    Button(action: didTapExit) {
+                        Image(systemName: "xmark")
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding(16)
+                .opacity({
+                    if case .editing = viewStore.pageState {
+                        return 0
+                    } else {
+                        return 1
+                    }
+                }())
             }
             .onAppear {
                 viewStore.send(.didAppear, animation: .default)
-                didAppear = true
+                withAnimation(.easeIn) {
+                    animateContent = true
+                }
             }
         }
     }
