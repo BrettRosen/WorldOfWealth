@@ -50,7 +50,10 @@ struct PageView: View {
                                             .font(.title2)
                                     case let .paragraph(paragraph):
                                         Text(paragraph.value)
-                                            .font(.callout)
+                                            .font(.body)
+                                    case let .hyperlink(hyperlink):
+                                        Link(hyperlink.label, destination: URL(string: hyperlink.urlString)!)
+                                            .font(.title)
                                     case let .image(url):
                                         AsyncImage(url: URL(string: url)) { image in
                                             image

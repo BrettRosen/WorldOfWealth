@@ -56,6 +56,11 @@ struct EditPageView: View {
                                 Text("Paragraph")
                             }
                             Button(action: {
+                                viewStore.send(.didTapAddContent(.hyperlink(.init(label: "", urlString: ""))))
+                            }) {
+                                Text("Link")
+                            }
+                            Button(action: {
                                 viewStore.send(.didTapAddContent(.divider(id: UUID().uuidString)))
                             }) {
                                 Text("Divider")
@@ -124,7 +129,24 @@ struct ContentBlockEditView: View {
                 TextField("Paragraph textfield", text: viewStore.binding(get: { state in
                     paragraph.value
                 }, send: ContentBlockEditFeature.Action.ViewAction.updateContentBlock), prompt: Text("Paragraph"))
-                    .font(.caption)
+                    .font(.body)
+            case let .hyperlink(hyperlink):
+                VStack {
+                    TextField(
+                        "Link textfield title",
+                        text: viewStore.binding(
+                            get: { state in hyperlink.label },
+                            send: ContentBlockEditFeature.Action.ViewAction.updateContentBlock),
+                        prompt: Text("Link Title")
+                    )
+                    TextField(
+                        "Link textfield url",
+                        text: viewStore.binding(
+                            get: { state in hyperlink.urlString },
+                            send: ContentBlockEditFeature.Action.ViewAction.updateHyperlinkURL),
+                        prompt: Text("Link URL")
+                    )
+                }
             case let .image(url):
                 AsyncImage(url: URL(string: url)) { image in
                     image

@@ -81,6 +81,7 @@ enum ContentBlock: Equatable, Codable, Identifiable {
     case image(url: String) // URL
     case divider(id: String)
     case spacer(id: String)
+    case hyperlink(ContentHyperlink)
 
     var id: String {
         switch self {
@@ -89,6 +90,18 @@ enum ContentBlock: Equatable, Codable, Identifiable {
         case let .image(url): return url
         case let .divider(id): return id
         case let .spacer(id): return id
+        case let .hyperlink(hyperlink): return hyperlink.id
+        }
+    }
+    
+    var isEmpty: Bool {
+        switch self {
+        case let .title(title): return title.value.isEmpty
+        case let .paragraph(paragraph): return paragraph.value.isEmpty
+        case let .image(url): return url.isEmpty
+        case let .divider(id): return false
+        case let .spacer(id): return false
+        case let .hyperlink(hyperlink): return hyperlink.label.isEmpty || hyperlink.urlString.isEmpty
         }
     }
 }
@@ -101,4 +114,10 @@ struct ContentTitle: Equatable, Codable, Identifiable {
 struct ContentParagraph: Equatable, Codable, Identifiable {
     var id: String = UUID().uuidString
     var value: String
+}
+
+struct ContentHyperlink: Equatable, Codable, Identifiable {
+    var id: String = UUID().uuidString
+    var label: String
+    var urlString: String
 }

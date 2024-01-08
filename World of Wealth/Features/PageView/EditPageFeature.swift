@@ -63,6 +63,7 @@ struct EditPageFeature {
                     state.page.content.move(fromOffsets: from, toOffset: to)
                     return .none
                 case .didTapCompleteEdit:
+                    state.page.content.removeAll(where: \.isEmpty)
                     return .run { [state] send in
                         await send(.reducer(.updatePageEffect(
                             Result { try await pageClient.edit(state.page) }
@@ -97,6 +98,7 @@ struct ContentBlockEditFeature {
     enum Action: Equatable, FeatureAction {
         enum ViewAction: Equatable {
             case updateContentBlock(String)
+            case updateHyperlinkURL(String)
         }
 
         enum ReducerAction: Equatable {
@@ -123,8 +125,18 @@ struct ContentBlockEditFeature {
                         state = .title(.init(id: title.id, value: value))
                     case let .paragraph(paragraph):
                         state = .paragraph(.init(id: paragraph.id, value: value))
+                    case let .hyperlink(hyperlink):
+                        state = .hyperlink(.init(id: hyperlink.id, label: value, urlString: hyperlink.urlString))
                     default:
                         break
+                    }
+                    return .none
+                case let .updateHyperlinkURL(value):
+                    switch state {
+                        case let .hyperlink(hyperlink):
+                            state = .hyperlink(.init(id: hyperlink.id, label: hyperlink.label, urlString: value))
+                        default:
+                            break
                     }
                     return .none
                 }
