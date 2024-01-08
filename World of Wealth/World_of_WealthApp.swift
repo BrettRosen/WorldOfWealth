@@ -164,7 +164,7 @@ struct World_of_WealthApp: App {
                                 switch tab {
                                 case .get_started:
                                     PageListView(store: store.scope(state: \.getStartedPageListState, action: AppFeature.Action.getStartedPageList))
-                                        // This and the below gestures are to prevent swiping horizontally when a detail page is active
+                                         // This and the below gestures are to prevent swiping horizontally when a detail page is active
                                         .gesture(viewStore.aPageIsActive ? DragGesture() : nil)
                                 case .make_gold:
                                     PageListView(store: store.scope(state: \.makeGoldPageListState, action: AppFeature.Action.makeGoldPageList))
