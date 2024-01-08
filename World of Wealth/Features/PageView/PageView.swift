@@ -36,6 +36,7 @@ struct PageView: View {
             ZStack {
 //                viewStore.pageID.color
 //                    .ignoresSafeArea()
+//
 
                 SwitchStore(self.store.scope(state: \.pageState, action: \.self)) { pageState in
 
