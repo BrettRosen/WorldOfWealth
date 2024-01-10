@@ -32,7 +32,8 @@ struct ImageBlurRowView: View {
                     .blur(radius: 90)
                     .offset(y: imageExists ? 0 : 150)
                     .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-                    .brightness(-0.6)
+                    .brightness(colorScheme == .dark ? -0.3 : -0.6)
+                    .opacity(0.8)
 
                 if let imageName = imageName {
                     Image(imageName)
@@ -114,7 +115,7 @@ struct PageListView: View {
                         ForEach(viewStore.pageIDs) { pageID in
                             ImageBlurRowView(title: pageID.title, description: pageID.description, color: pageID.color, imageName: pageID.imageName, namespace: namespace, didTap: {
 
-                                viewStore.send(.updatedSelectedPageID(pageID), animation: .default)
+                                viewStore.send(.updatedSelectedPageID(pageID), animation: .linear(duration: 0.2))
                             })
                             .scrollTransition { content, phase in
                                 content

@@ -50,7 +50,7 @@ struct PageView: View {
                 LinearGradient(colors: [viewStore.pageID.color.opacity(0.9), getGradient(from: viewStore.pageID.color), getGradient(from: viewStore.pageID.color)], startPoint: .bottom, endPoint: .top)
                     .ignoresSafeArea(edges: .all)
                     .opacity(animateContent ? 1 : 0)
-                    .brightness(-0.6)
+                    .brightness(-0.8)
 
                 SwitchStore(self.store.scope(state: \.pageState, action: \.self)) { pageState in
                     switch pageState {
@@ -115,38 +115,37 @@ struct PageView: View {
                              then: EditPageView.init(store:)
                         )
                     case .isLoading:
-                        Text("Loading")
+                        VStack {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                        .onAppear {
+                            viewStore.send(.didAppear, animation: .default)
+                            withAnimation(.easeIn) {
+                                animateContent = true
+                            }
+                        }
                     case .error:
                         Text("Error")
                     }
                 }
 
-                HStack(alignment: .top) {
-                    Spacer()
-                    Button(action: {
-                        viewStore.send(.didTapEdit, animation: .default)
-                    }) {
-                        Image(systemName: "pencil")
+                if case .page = viewStore.pageState {
+                    HStack(alignment: .top) {
+                        Spacer()
+                        Button(action: {
+                            viewStore.send(.didTapEdit, animation: .default)
+                        }) {
+                            Image(systemName: "pencil")
+                        }
+                        .buttonStyle(.plain)
+                        Button(action: didTapExit) {
+                            Image(systemName: "xmark")
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
-                    Button(action: didTapExit) {
-                        Image(systemName: "xmark")
-                    }
-                    .buttonStyle(.plain)
-                }
-                .padding(16)
-                .opacity({
-                    if case .editing = viewStore.pageState {
-                        return 0
-                    } else {
-                        return 1
-                    }
-                }())
-            }
-            .onAppear {
-                viewStore.send(.didAppear, animation: .default)
-                withAnimation(.easeIn) {
-                    animateContent = true
+                    .padding(16)
                 }
             }
         }

@@ -138,8 +138,9 @@ extension AppFeature {
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    return true
+      FirebaseApp.configure()
+
+      return true
   }
 }
 
@@ -154,29 +155,61 @@ struct World_of_WealthApp: App {
     var body: some Scene {
         WindowGroup {
             WithViewStore(store, observe: AppFeature.ViewState.init, send: AppFeature.Action.view) { viewStore in
-                VStack(spacing: 0) {
+
+                NavigationStack {
                     ZStack(alignment: .topTrailing) {
-                        TabView(selection: viewStore.binding(
-                            get: \.tab,
-                            send: AppFeature.Action.ViewAction.didUpdateTab
-                        ).animation()) {
-                            ForEach(AppFeature.Tab.allCases) { tab in
-                                switch tab {
-                                case .get_started:
-                                    PageListView(store: store.scope(state: \.getStartedPageListState, action: AppFeature.Action.getStartedPageList))
-                                         // This and the below gestures are to prevent swiping horizontally when a detail page is active
-                                        .gesture(viewStore.aPageIsActive ? DragGesture() : nil)
-                                case .make_gold:
-                                    PageListView(store: store.scope(state: \.makeGoldPageListState, action: AppFeature.Action.makeGoldPageList))
-                                        .gesture(viewStore.aPageIsActive ? DragGesture() : nil)
-                                case .community:
-                                    Text(tab.rawValue.replacingOccurrences(of: "_", with: " ").uppercased())
-                                        .gesture(viewStore.aPageIsActive ? DragGesture() : nil)
+                        VStack(spacing: 0) {
+                            TabView(selection: viewStore.binding(
+                                get: \.tab,
+                                send: AppFeature.Action.ViewAction.didUpdateTab
+                            ).animation()) {
+                                ForEach(AppFeature.Tab.allCases) { tab in
+                                    switch tab {
+                                    case .get_started:
+                                        PageListView(store: store.scope(state: \.getStartedPageListState, action: AppFeature.Action.getStartedPageList))
+                                        // This and the below gestures are to prevent swiping horizontally when a detail page is active
+                                            .gesture(viewStore.aPageIsActive ? DragGesture() : nil)
+                                    case .make_gold:
+                                        PageListView(store: store.scope(state: \.makeGoldPageListState, action: AppFeature.Action.makeGoldPageList))
+                                            .gesture(viewStore.aPageIsActive ? DragGesture() : nil)
+                                    case .community:
+                                        Text(tab.rawValue.replacingOccurrences(of: "_", with: " ").uppercased())
+                                            .gesture(viewStore.aPageIsActive ? DragGesture() : nil)
+                                    }
                                 }
                             }
+                            .tabViewStyle(.page(indexDisplayMode: .never))
+
+                            if !viewStore.aPageIsActive {
+                                HStack {
+                                    ForEach(AppFeature.Tab.allCases) { tab in
+                                        Spacer()
+                                        let isSelected = tab == viewStore.tab
+                                        Button(action: {
+                                            viewStore.send(.didTapTab(tab), animation: .default)
+                                        }) {
+                                            VStack(spacing: 8) {
+                                                Image(systemName: isSelected ? (tab.imageName + ".fill") : tab.imageName)
+                                                    .contentTransition(isSelected ? .symbolEffect(.replace) : .identity)
+                                                    .font(.title3)
+                                                Text(tab.rawValue.replacingOccurrences(of: "_", with: " ").uppercased())
+                                                    .fontWidth(.condensed)
+                                                    .font(.caption2)
+                                            }
+                                            .fontWeight(isSelected ? .semibold : .regular)
+                                            .foregroundStyle(isSelected ? .primary : .secondary)
+                                            .sensoryFeedback(.impact(flexibility: .soft), trigger: isSelected)
+                                            .frame(height: 40)
+                                        }
+                                        .buttonStyle(.plain)
+                                        Spacer()
+                                    }
+                                }
+                                .padding(.vertical, 4)
+                                .padding(.top, 12)
+                                .transition(.move(edge: .bottom))
+                            }
                         }
-                        .tabViewStyle(.page(indexDisplayMode: .never))
-                        .ignoresSafeArea()
 
                         Button(action: {
 
@@ -195,36 +228,6 @@ struct World_of_WealthApp: App {
                                 .opacity(viewStore.aPageIsActive ? 0 : 1)
                         }
                         .buttonStyle(.plain)
-                    }
-
-                    if !viewStore.aPageIsActive {
-                        HStack {
-                            ForEach(AppFeature.Tab.allCases) { tab in
-                                Spacer()
-                                let isSelected = tab == viewStore.tab
-                                Button(action: {
-                                    viewStore.send(.didTapTab(tab), animation: .default)
-                                }) {
-                                    VStack(spacing: 8) {
-                                        Image(systemName: isSelected ? (tab.imageName + ".fill") : tab.imageName)
-                                            .contentTransition(isSelected ? .symbolEffect(.replace) : .identity)
-                                            .font(.title3)
-                                        Text(tab.rawValue.replacingOccurrences(of: "_", with: " ").uppercased())
-                                            .fontWidth(.condensed)
-                                            .font(.caption2)
-                                    }
-                                    .fontWeight(isSelected ? .semibold : .regular)
-                                    .foregroundStyle(isSelected ? .primary : .secondary)
-                                    .sensoryFeedback(.impact(flexibility: .soft), trigger: isSelected)
-                                    .frame(height: 40)
-                                }
-                                .buttonStyle(.plain)
-                                Spacer()
-                            }
-                        }
-                        .padding(.vertical, 4)
-                        .padding(.top, 12)
-                        .transition(.move(edge: .bottom))
                     }
                 }
             }

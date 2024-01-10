@@ -26,73 +26,68 @@ struct EditPageView: View {
 
     var body: some View {
         WithViewStore(store, observe: EditPageFeature.ViewState.init, send: EditPageFeature.Action.view) { viewStore in
-            ZStack {
-                List {
-                    ForEachStore(store.scope(state: \.page.content, action: EditPageFeature.Action.editingContentBlock)) { store in
-                        ContentBlockEditView(store: store)
+            List {
+                ForEachStore(store.scope(state: \.page.content, action: EditPageFeature.Action.editingContentBlock)) { store in
+                    ContentBlockEditView(store: store)
+                }
+                .onDelete { indexSet in
+                    viewStore.send(.didTapDelete(indexSet), animation: .default)
+                }
+                .onMove { from, to in
+                    viewStore.send(.didMove(from: from, to: to), animation: .default)
+                }
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarLeading) {
+                    Menu("", systemImage: "plus") {
+                        Button(action: {
+                            viewStore.send(.didTapAddContent(.title(.init(value: ""))))
+                        }) {
+                            Text("Title")
+                        }
+                        Button(action: {
+                            viewStore.send(.didTapAddContent(.paragraph(.init(value: ""))))
+                        }) {
+                            Text("Paragraph")
+                        }
+                        Button(action: {
+                            viewStore.send(.didTapAddContent(.hyperlink(.init(label: "", urlString: ""))))
+                        }) {
+                            Text("Link")
+                        }
+                        Button(action: {
+                            viewStore.send(.didTapAddContent(.divider(id: UUID().uuidString)))
+                        }) {
+                            Text("Divider")
+                        }
+                        Button(action: {
+                            viewStore.send(.didTapAddContent(.spacer(id: UUID().uuidString)))
+                        }) {
+                            Text("Spacer")
+                        }
                     }
-                    .onDelete { indexSet in
-                        viewStore.send(.didTapDelete(indexSet), animation: .default)
-                    }
-                    .onMove { from, to in
-                        viewStore.send(.didMove(from: from, to: to), animation: .default)
-                    }
-                    .padding(.horizontal, 16)
+                    .buttonStyle(.plain)
                 }
 
-                VStack {
-                    HStack(spacing: 16) {
-                        Menu("", systemImage: "plus") {
-                            Button(action: {
-                                viewStore.send(.didTapAddContent(.title(.init(value: ""))))
-                            }) {
-                                Text("Title")
-                            }
-                            Button(action: {
-                                viewStore.send(.didTapAddContent(.paragraph(.init(value: ""))))
-                            }) {
-                                Text("Paragraph")
-                            }
-                            Button(action: {
-                                viewStore.send(.didTapAddContent(.hyperlink(.init(label: "", urlString: ""))))
-                            }) {
-                                Text("Link")
-                            }
-                            Button(action: {
-                                viewStore.send(.didTapAddContent(.divider(id: UUID().uuidString)))
-                            }) {
-                                Text("Divider")
-                            }
-                            Button(action: {
-                                viewStore.send(.didTapAddContent(.spacer(id: UUID().uuidString)))
-                            }) {
-                                Text("Spacer")
-                            }
-                        }
-                        .buttonStyle(.plain)
-
-                        Spacer()
-                        Button(action: {
-                            viewStore.send(.didTapCompleteEdit, animation: .spring(.bouncy))
-                        }) {
-                            Image(systemName: "checkmark")
-                                .padding(8)
-                                .background(.thinMaterial, in: Circle())
-                        }
-                        .buttonStyle(.plain)
-                        Button(action: {
-                            viewStore.send(.didTapCancel, animation: .default)
-                        }) {
-                            Text("Cancel")
-                                .font(.callout)
-                                .foregroundStyle(.red)
-                        }
-                        .buttonStyle(.plain)
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button(action: {
+                        viewStore.send(.didTapCompleteEdit, animation: .spring(.bouncy))
+                    }) {
+                        Text("Save")
+                            .font(.callout)
+                            .foregroundStyle(.green)
                     }
-                    .animation(.easeIn.delay(0.2)) { content in
-                        content.opacity(didAppear ? 1 : 0)
+                    .buttonStyle(.plain)
+                    .padding(.trailing, 4)
+                    Button(action: {
+                        viewStore.send(.didTapCancel, animation: .default)
+                    }) {
+                        Text("Cancel")
+                            .font(.callout)
+                            .foregroundStyle(.red)
                     }
-                    Spacer()
+                    .buttonStyle(.plain)
+                    EditButton()
                 }
             }
             .onAppear {
@@ -124,10 +119,11 @@ struct ContentBlockEditView: View {
                     .font(.caption)
                     .fontWeight(.bold)
             case let .paragraph(paragraph):
-                TextField("Paragraph textfield", text: viewStore.binding(get: { state in
+                TextEditor(text: viewStore.binding(get: { state in
                     paragraph.value
-                }, send: ContentBlockEditFeature.Action.ViewAction.updateContentBlock), prompt: Text("Paragraph"))
+                }, send: ContentBlockEditFeature.Action.ViewAction.updateContentBlock))
                     .font(.caption2)
+                    .frame(height: 120)
             case let .hyperlink(hyperlink):
                 VStack {
                     TextField(

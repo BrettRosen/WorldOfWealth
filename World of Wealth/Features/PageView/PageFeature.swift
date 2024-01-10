@@ -67,7 +67,7 @@ struct PageFeature {
                             try await pageClient.load(pageID: state.pageID)
                         })))
                     }
-                    .animation(.easeIn)
+                    .animation(.easeIn(duration: 0.2))
                 case .didTapEdit:
                     if case let .editing(editingState) = state.pageState {
                         state.pageState = .page(editingState.page)
