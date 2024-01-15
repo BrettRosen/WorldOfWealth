@@ -59,6 +59,7 @@
 		1F9CC6682B0F2745004DB9B3 /* TemplateFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC6672B0F2745004DB9B3 /* TemplateFeature.swift */; };
 		1F9CC66C2B103440004DB9B3 /* PageListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC66B2B103440004DB9B3 /* PageListFeature.swift */; };
 		1F9CC66E2B10344D004DB9B3 /* PageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CC66D2B10344D004DB9B3 /* PageListView.swift */; };
+		1FD8CE632B55B55800921492 /* FirebaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8CE622B55B55800921492 /* FirebaseStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		1F9CC6672B0F2745004DB9B3 /* TemplateFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateFeature.swift; sourceTree = "<group>"; };
 		1F9CC66B2B103440004DB9B3 /* PageListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageListFeature.swift; sourceTree = "<group>"; };
 		1F9CC66D2B10344D004DB9B3 /* PageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageListView.swift; sourceTree = "<group>"; };
+		1FD8CE622B55B55800921492 /* FirebaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				1F5283202B16CF49000F5260 /* FirestoreNetworking.swift */,
+				1FD8CE622B55B55800921492 /* FirebaseStorage.swift */,
 				1F5283372B193F4A000F5260 /* PageNetworking.swift */,
 			);
 			path = Networking;
@@ -502,6 +505,7 @@
 				1F9CC6372B0F236A004DB9B3 /* World_of_WealthApp.swift in Sources */,
 				1F5283212B16CF49000F5260 /* FirestoreNetworking.swift in Sources */,
 				1F4C8ADB2B2BF7FC00DD09AE /* View+Extensions.swift in Sources */,
+				1FD8CE632B55B55800921492 /* FirebaseStorage.swift in Sources */,
 				1F5283232B16CF86000F5260 /* Codable+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
